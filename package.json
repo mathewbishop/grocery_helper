@@ -1,0 +1,32 @@
+{
+    "name": "grocery_helper",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "api": "nodemon server.js",
+        "client": "cd client && npm run serve",
+        "start:dev": "concurrently \"npm run api\" \"npm run client\"",
+        "build": "cd client && npm install && npm run build",
+        "heroku-postbuild": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mathewbishop/grocery_helper.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mathewbishop/grocery_helper/issues"
+    },
+    "homepage": "https://github.com/mathewbishop/grocery_helper#readme",
+    "dependencies": {
+        "concurrently": "^5.0.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mysql": "^2.17.1"
+    }
+}
