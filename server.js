@@ -3,6 +3,8 @@
 //============================================================
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+const mealsAPI = require("./routes/mealsAPI");
 //============================================================
 // PORT
 //============================================================
@@ -22,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
 // MongoDB Connection
 //============================================================
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/grocery_helper_db";
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 //============================================================
 // Get Info On DB Connection
 //============================================================
@@ -34,7 +36,7 @@ db.once("open", function() {
 //============================================================
 // Routes
 //============================================================
-
+app.use(mealsAPI);
 //============================================================
 // Listener
 //============================================================
