@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const GroceryListItem = require("../models/GroceryListItem");
 
-router.get("/api/groceryList/:userID", (req, res) => {
+router.get("/api/grocery-list/:userID", (req, res) => {
     GroceryListItem.find({ user: userID })
         .then(data => res.json(data))
         .catch(err => console.log(err));
 });
 
-router.post("/api/groceryList", (req, res) => {
+router.post("/api/grocery-list", (req, res) => {
     console.log("POST route hit.");
     let listItem = new GroceryListItem(req.body.data);
     listItem
@@ -17,7 +17,7 @@ router.post("/api/groceryList", (req, res) => {
     res.end();
 });
 
-router.put("/api/groceryList/:id", (req, res) => {
+router.put("/api/grocery-list/:id", (req, res) => {
     console.log("PUT route hit.");
     let itemID = req.params.id;
     let itemUpdate = req.body.data;
@@ -26,7 +26,7 @@ router.put("/api/groceryList/:id", (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.delete("/api/groceryList/:id", (req, res) => {
+router.delete("/api/grocery-list/:id", (req, res) => {
     console.log("DELETE route hit.");
     let itemID = req.params.id;
     console.log(itemID);
