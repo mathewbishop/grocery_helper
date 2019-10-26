@@ -18,6 +18,7 @@
                 </ul>
             </section>
         </header>
+
         <section class="w-11/12 m-auto main-content-container">
             <div class="h-64 w-auto" style="background-color: rgba(211,211,211, .4);">
                 <div class="h-48"></div>
@@ -44,12 +45,13 @@
                 >Seasonal Veggies</button>
             </div>
         </section>
+
+        <footer class="h-32 bg-gray-500 mt-12" style="background-color: rgba(211,211,211, 1);"></footer>
     </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
+// import axios from "axios";
 
 export default {
     name: "home",
