@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div>
         <TheHeader />
 
         <section class="w-3/4 m-auto main-content-container">
@@ -49,7 +49,7 @@ import TheHeader from "../components/TheHeader";
 import TheFooter from "../components/TheFooter";
 
 export default {
-    name: "home",
+    name: "Home",
     components: {
         TheHeader,
         TheFooter

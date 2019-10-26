@@ -1,15 +1,31 @@
 <template>
-    <div class="meals">
-        <div></div>
+    <div>
+        <TheHeader />
+
+        <div class="meals-container w-11/12">
+            <div v-for="meal in meals" v-bind:key="meal._id" class="bg-green-300 w-16">
+                <h1>{{meal.name}}</h1>
+                <p>Category: {{meal.category}}</p>
+                <p>Protein: {{meal.protein}}</p>
+            </div>
+        </div>
+
+        <TheFooter />
     </div>
 </template>
 
 
 <script>
 import axios from "axios";
+import TheHeader from "../components/TheHeader";
+import TheFooter from "../components/TheFooter";
 
 export default {
-    name: "meals",
+    name: "Meals",
+    components: {
+        TheHeader,
+        TheFooter
+    },
     created: function() {
         this.getMeals();
     },
