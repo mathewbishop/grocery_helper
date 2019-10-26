@@ -19,27 +19,37 @@
             </section>
         </header>
 
-        <section class="w-11/12 m-auto main-content-container">
+        <section class="w-3/4 m-auto main-content-container">
             <div class="h-64 w-auto" style="background-color: rgba(211,211,211, .4);">
-                <div class="h-48"></div>
-                <button
-                    class="bg-orange-400 rounded-full p-3 font-bold my-1 hover:bg-orange-300 w-40 text-sm"
-                >Manage Meals</button>
+                <div class="h-48">
+                    <i class="fas fa-book fa-4x mt-16"></i>
+                </div>
+                <router-link to="meals">
+                    <button
+                        class="bg-orange-400 rounded-full p-3 font-bold my-1 hover:bg-orange-300 w-40 text-sm"
+                    >Manage Meals</button>
+                </router-link>
             </div>
             <div class="h-64 w-auto" style="background-color: rgba(211,211,211, .4);">
-                <div class="h-48"></div>
+                <div class="h-48">
+                    <i class="fas fa-list-ol fa-4x mt-16"></i>
+                </div>
                 <button
                     class="bg-orange-400 rounded-full p-3 font-bold my-1 hover:bg-orange-300 w-40 text-sm"
                 >Grocery List</button>
             </div>
             <div class="h-64 w-auto" style="background-color: rgba(211,211,211, .4);">
-                <div class="h-48"></div>
+                <div class="h-48">
+                    <i class="far fa-calendar-alt fa-4x mt-16"></i>
+                </div>
                 <button
                     class="bg-orange-400 rounded-full p-3 font-bold my-1 hover:bg-orange-300 w-40 text-sm"
                 >Meal Plan</button>
             </div>
             <div class="h-64 w-auto" style="background-color: rgba(211,211,211, .4);">
-                <div class="h-48"></div>
+                <div class="h-48">
+                    <i class="fas fa-carrot fa-4x mt-16"></i>
+                </div>
                 <button
                     class="bg-orange-400 rounded-full p-3 font-bold my-1 hover:bg-orange-300 w-40 text-sm"
                 >Seasonal Veggies</button>
@@ -51,14 +61,15 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
     name: "home",
     components: {},
     data: function() {
         return {
-            showUserMenu: false
+            showUserMenu: false,
+            meals: []
         };
     },
     methods: {}

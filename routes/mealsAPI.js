@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const Meal = require("../models/Meal");
 
-router.get("/api/meals/:userID", (req, res) => {
+// TODO: Add userID as param
+router.get("/api/meals", (req, res) => {
     let userID = req.params.userID;
-    Meal.find({ user: userID })
+    // Meal.find({ user: userID })
+    //     .then(data => res.json(data))
+    //     .catch(err => console.log(err));
+    Meal.find()
         .then(data => res.json(data))
         .catch(err => console.log(err));
 });
