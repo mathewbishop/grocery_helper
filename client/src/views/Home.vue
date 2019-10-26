@@ -18,6 +18,7 @@
                 </ul>
             </section>
         </header>
+        <p class="text-red-600">TEST</p>
         <div class="main-content-wrapper">
             <section class="home--module-row-first">
                 <div class="home--module-card"></div>
