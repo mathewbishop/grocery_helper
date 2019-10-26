@@ -2,7 +2,7 @@
     <div>
         <TheHeader />
 
-        <div class="meals-container w-11/12">
+        <div class="meals-container w-11/12 m-auto">
             <div v-for="meal in meals" v-bind:key="meal._id" class="bg-green-300 w-16">
                 <h1>{{meal.name}}</h1>
                 <p>Category: {{meal.category}}</p>
@@ -36,11 +36,16 @@ export default {
     },
     methods: {
         getMeals: function() {
-            axios.get("/api/meals").then(res => console.log(res.data));
+            axios.get("/api/meals").then(res => (this.meals = res.data));
         }
     }
 };
 </script>
 
 <style scoped>
+.meals-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 1rem;
+}
 </style>
