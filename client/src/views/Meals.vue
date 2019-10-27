@@ -3,10 +3,26 @@
         <TheHeader />
 
         <div class="meals-container w-11/12 m-auto">
-            <div v-for="meal in meals" v-bind:key="meal._id" class="bg-green-300 w-16">
-                <h1>{{meal.name}}</h1>
-                <p>Category: {{meal.category}}</p>
-                <p>Protein: {{meal.protein}}</p>
+            <div
+                v-for="meal in meals"
+                v-bind:key="meal._id"
+                class="meal-card border-solid border-orange-300 border-2 p-4 cursor-pointer"
+            >
+                <!-- <div class="flex justify-start">
+                    <div
+                        class="checkbox w-5 h-5 border-solid border-black border-2 rounded text-center"
+                        @click="toggleCheckbox(meal)"
+                    >
+                        <i
+                            v-show="meal.checked"
+                            class="fas fa-check fa-lg text-green-500"
+                            style="position: relative; bottom: 5px;"
+                        ></i>
+                    </div>
+                </div>-->
+                <h1 class="font-semibold pb-2">{{meal.name}}</h1>
+                <p class="text-xs">Category: {{meal.category}}</p>
+                <p class="text-xs">Protein: {{meal.protein}}</p>
             </div>
         </div>
 
@@ -36,7 +52,15 @@ export default {
     },
     methods: {
         getMeals: function() {
-            axios.get("/api/meals").then(res => (this.meals = res.data));
+            axios.get("/api/meals").then(res => {
+                res.data.forEach(item => {
+                    item.checked = false;
+                });
+                this.meals = res.data;
+            });
+        },
+        toggleCheckbox: function(meal) {
+            meal.checked = !meal.checked;
         }
     }
 };
@@ -47,5 +71,13 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 1rem;
+}
+.meal-card {
+    background-color: rgba(211, 211, 211, 0.3);
+}
+.checkbox {
+    position: relative;
+    bottom: 12px;
+    right: 12px;
 }
 </style>
