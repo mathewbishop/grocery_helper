@@ -2,6 +2,24 @@
     <div>
         <TheHeader />
 
+        <section class="flex justify-start w-11/12 m-auto mb-8">
+            <div>
+                <input type="search" class="meal-search border-black border-2 rounded pl-1" />
+            </div>
+            <div class="flex ml-4">
+                <p class="mr-2">Filter:</p>
+                <select class="mx-1 border-black border-2 rounded">
+                    <option value v-for="(name, index) in nameFilters" :key="index">{{name}}</option>
+                </select>
+                <select class="mx-1 border-black border-2 rounded">
+                    <option value v-for="(cat, index) in categoryFilters" :key="index">{{cat}}</option>
+                </select>
+                <select class="mx-1 border-black border-2 rounded">
+                    <option value v-for="(prot, index) in proteinFilters" :key="index">{{prot}}</option>
+                </select>
+            </div>
+        </section>
+
         <div class="meals-container w-11/12 m-auto">
             <MealCard
                 v-for="meal in meals"
@@ -33,9 +51,13 @@ export default {
     created: function() {
         this.getMeals();
     },
+    mounted: function() {},
     data: function() {
         return {
-            meals: []
+            meals: [],
+            nameFilters: [],
+            categoryFilters: [],
+            proteinFilters: []
         };
     },
     methods: {
@@ -45,12 +67,27 @@ export default {
                     item.checked = false;
                 });
                 this.meals = res.data;
+                this.getFilterOptions();
             });
         },
         toggleSelected: function(meal) {
             meal.checked = !meal.checked;
+        },
+        getFilterOptions: function() {
+            this.meals.forEach(meal => {
+                if (!this.nameFilters.includes(meal.name)) {
+                    this.nameFilters.push(meal.name);
+                }
+                if (!this.categoryFilters.includes(meal.category)) {
+                    this.categoryFilters.push(meal.category);
+                }
+                if (!this.proteinFilters.includes(meal.protein)) {
+                    this.proteinFilters.push(meal.protein);
+                }
+            });
         }
-    }
+    },
+    computed: {}
 };
 </script>
 
