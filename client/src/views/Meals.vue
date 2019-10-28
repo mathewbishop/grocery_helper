@@ -4,17 +4,19 @@
 
         <section class="flex justify-start w-11/12 m-auto mb-8">
             <div>
-                <input type="search" class="meal-search border-black border-2 rounded pl-1" />
+                <input
+                    type="search"
+                    class="meal-search border-black border-2 rounded pl-1"
+                    placeholder="Search..."
+                    v-model="searchString"
+                />
             </div>
             <div class="flex ml-4">
                 <p class="mr-2">Filter:</p>
-                <select class="mx-1 border-black border-2 rounded">
-                    <option value v-for="(name, index) in nameFilters" :key="index">{{name}}</option>
-                </select>
-                <select class="mx-1 border-black border-2 rounded">
+                <select class="mx-1 border-black border-2 rounded" v-model="selectedCategoryFilter">
                     <option value v-for="(cat, index) in categoryFilters" :key="index">{{cat}}</option>
                 </select>
-                <select class="mx-1 border-black border-2 rounded">
+                <select class="mx-1 border-black border-2 rounded" v-model="selectedProteinFilter">
                     <option value v-for="(prot, index) in proteinFilters" :key="index">{{prot}}</option>
                 </select>
             </div>
@@ -22,11 +24,12 @@
 
         <div class="meals-container w-11/12 m-auto">
             <MealCard
-                v-for="meal in meals"
+                v-for="meal in filteredMeals"
                 v-bind:key="meal._id"
                 :name="meal.name"
                 :category="meal.category"
                 :protein="meal.protein"
+                v-show="filterByCategory(meal.category) || filterByProtein(meal.protein)"
             />
         </div>
 
@@ -51,13 +54,14 @@ export default {
     created: function() {
         this.getMeals();
     },
-    mounted: function() {},
     data: function() {
         return {
             meals: [],
-            nameFilters: [],
-            categoryFilters: [],
-            proteinFilters: []
+            categoryFilters: [""],
+            proteinFilters: [""],
+            selectedCategoryFilter: "",
+            selectedProteinFilter: "",
+            searchString: ""
         };
     },
     methods: {
@@ -75,9 +79,6 @@ export default {
         },
         getFilterOptions: function() {
             this.meals.forEach(meal => {
-                if (!this.nameFilters.includes(meal.name)) {
-                    this.nameFilters.push(meal.name);
-                }
                 if (!this.categoryFilters.includes(meal.category)) {
                     this.categoryFilters.push(meal.category);
                 }
@@ -85,9 +86,43 @@ export default {
                     this.proteinFilters.push(meal.protein);
                 }
             });
+        },
+        filterByCategory: function(category) {
+            if (
+                this.selectedCategoryFilter === category ||
+                !this.selectedCategoryFilter
+            ) {
+                console.log("TRUE", this.selectedCategoryFilter);
+                return true;
+            } else {
+                console.log("FALSE", this.selectedCategoryFilter);
+                return false;
+            }
+        },
+        filterByProtein: function(protein) {
+            if (
+                this.selectedProteinFilter === protein ||
+                !this.selectedProteinFilter
+            ) {
+                return true;
+            } else {
+                return false;
+            }
         }
     },
-    computed: {}
+    computed: {
+        filteredMeals: function() {
+            if (this.searchString) {
+                return this.meals.filter(meal => {
+                    return meal.name
+                        .toLowerCase()
+                        .includes(this.searchString.toLowerCase());
+                });
+            } else {
+                return this.meals;
+            }
+        }
+    }
 };
 </script>
 
