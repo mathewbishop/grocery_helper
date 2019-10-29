@@ -14,10 +14,18 @@
             <div class="flex ml-4">
                 <p class="mr-2">Filter:</p>
                 <select class="mx-1 border-black border-2 rounded" v-model="selectedCategoryFilter">
-                    <option value v-for="(cat, index) in categoryFilters" :key="index">{{cat}}</option>
+                    <option
+                        :value="cat"
+                        v-for="(cat, index) in categoryFilters"
+                        :key="index"
+                    >{{cat}}</option>
                 </select>
                 <select class="mx-1 border-black border-2 rounded" v-model="selectedProteinFilter">
-                    <option value v-for="(prot, index) in proteinFilters" :key="index">{{prot}}</option>
+                    <option
+                        :value="prot"
+                        v-for="(prot, index) in proteinFilters"
+                        :key="index"
+                    >{{prot}}</option>
                 </select>
             </div>
         </section>
@@ -29,7 +37,7 @@
                 :name="meal.name"
                 :category="meal.category"
                 :protein="meal.protein"
-                v-show="filterByCategory(meal.category) || filterByProtein(meal.protein)"
+                v-show="filterByCategory(meal.category) && filterByProtein(meal.protein)"
             />
         </div>
 
@@ -92,10 +100,8 @@ export default {
                 this.selectedCategoryFilter === category ||
                 !this.selectedCategoryFilter
             ) {
-                console.log("TRUE", this.selectedCategoryFilter);
                 return true;
             } else {
-                console.log("FALSE", this.selectedCategoryFilter);
                 return false;
             }
         },
