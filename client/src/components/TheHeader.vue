@@ -25,7 +25,12 @@
 
 <script>
 export default {
-    name: "TheHeader"
+    name: "TheHeader",
+    data: function() {
+        return {
+            showUserMenu: false
+        };
+    }
 };
 </script>
 

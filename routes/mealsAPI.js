@@ -12,6 +12,14 @@ router.get("/api/meals", (req, res) => {
         .catch(err => console.log(err));
 });
 
+// Decided to define the GET single meal as a separate route, due to future plans/ideas on how to set up the user auth
+router.get("/api/meals/:mealID", (req, res) => {
+    let mealID = req.params.mealID;
+    Meal.findById(mealID)
+        .then(data => res.json(data))
+        .catch(err => console.log(err));
+});
+
 router.post("/api/meals", (req, res) => {
     console.log("POST route hit.");
     let newMeal = new Meal(req.body.data);

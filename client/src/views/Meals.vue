@@ -37,6 +37,7 @@
                 :name="meal.name"
                 :category="meal.category"
                 :protein="meal.protein"
+                :mealID="meal._id"
                 v-show="filterByCategory(meal.category) && filterByProtein(meal.protein)"
             />
         </div>
@@ -75,9 +76,6 @@ export default {
     methods: {
         getMeals: function() {
             axios.get("/api/meals").then(res => {
-                res.data.forEach(item => {
-                    item.checked = false;
-                });
                 this.meals = res.data;
                 this.getFilterOptions();
             });
