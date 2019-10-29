@@ -1,28 +1,31 @@
 <template>
     <div>
         <TheHeader />
-        <section class="w-11/12 m-auto">
+        <section class="w-11/12 lg:w-1/2 m-auto">
             <div></div>
             <div>
-                <div>
+                <div class="meal-primary-info mb-8">
                     <h1>{{name}}</h1>
                     <p>Category: {{category}}</p>
                     <p>Protein: {{protein}}</p>
                 </div>
-                <div>
-                    <h1>Recipe</h1>
-                    <p>Cook Time: {{cookTime}}</p>
-                    <h2>Ingredients</h2>
-                    <ul>
+                <div class="mt-2 p-2 pl-8 border-solid border-orange-300 border-2 rounded-lg">
+                    <h1 class="text-3xl border-black border-solid border-b-2 mb-2">Recipe</h1>
+                    <p class="mb-8">
+                        <i class="far fa-clock fa-lg"></i>
+                        {{cookTime}}
+                    </p>
+                    <h2 class="text-lg font-medium">Ingredients</h2>
+                    <ul class="list-disc pl-8 mb-4">
                         <li v-for="(ing, index) in ingredients" :key="index">{{ing}}</li>
                     </ul>
-                    <h2>Instructions</h2>
-                    <ol>
+                    <h2 class="text-lg font-medium">Instructions</h2>
+                    <ol class="list-decimal pl-8">
                         <li v-for="(ins, index) in instructions" :key="index">{{ins}}</li>
                     </ol>
                     <br />
-                    <h2>Notes</h2>
-                    <p>{{notes}}</p>
+                    <h2 class="text-lg font-medium">Notes:</h2>
+                    <p class="mb-4">{{notes}}</p>
                 </div>
             </div>
         </section>
@@ -74,4 +77,7 @@ export default {
 </script>
 
 <style scoped>
+.meal-primary-info {
+    background-color: rgba(211, 211, 211, 0.3);
+}
 </style>
