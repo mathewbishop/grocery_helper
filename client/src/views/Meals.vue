@@ -72,14 +72,31 @@
                     <label>Cook Time</label>
                     <input type="text" />
                 </div>
-                <div class="flex flex-col my-2">
-                    <label>Ingredients</label>
-                    <input type="text" />
-                    <i class="fas fa-plus-circle fa-lg"></i>
+                <div class="my-2 flex">
+                    <div class="w-full pr-2">
+                        <label class="block">Ingredients</label>
+                        <input
+                            v-for="(ing, index) in meal.ingredients"
+                            :key="index"
+                            v-model="ing[index]"
+                            class="block w-full"
+                            type="text"
+                        />
+                    </div>
+                    <i class="fas fa-plus-circle fa-lg self-end pb-1 cursor-pointer"></i>
                 </div>
-                <div class="flex flex-col my-2">
-                    <label>Instructions</label>
-                    <input type="text" />
+                <div class="my-2 flex">
+                    <div class="w-full pr-2">
+                        <label class="block">Instructions</label>
+                        <input
+                            v-for="(ins, index) in meal.instructions"
+                            :key="index"
+                            v-model="ins[index]"
+                            class="block w-full"
+                            type="text"
+                        />
+                    </div>
+                    <i class="fas fa-plus-circle fa-lg self-end pb-1 cursor-pointer"></i>
                 </div>
                 <div class="flex flex-col my-2">
                     <label>Notes</label>
@@ -117,7 +134,16 @@ export default {
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
             searchString: "",
-            addMealFormOpen: false
+            addMealFormOpen: false,
+            meal: {
+                name: "",
+                category: "",
+                protein: "",
+                cookTime: "",
+                ingredients: [],
+                instructions: [],
+                notes: ""
+            }
         };
     },
     methods: {
@@ -159,6 +185,12 @@ export default {
             } else {
                 return false;
             }
+        },
+        addIngredientInput: function() {
+            this.meal.ingredients.push("Ingredient...");
+        },
+        removeIngredientInput: function(index) {
+            this.meal.ingredients.splice(index, 1);
         }
     },
     computed: {
