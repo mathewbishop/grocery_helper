@@ -54,5 +54,6 @@ export default {
 }
 .meal-card {
     background-color: rgba(211, 211, 211, 0.3);
+    max-width: 251px;
 }
 </style>

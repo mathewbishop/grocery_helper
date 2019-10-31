@@ -2,7 +2,7 @@
     <div>
         <TheHeader />
 
-        <section class="flex justify-start w-11/12 m-auto mb-8">
+        <section class="flex justify-start items-center w-11/12 m-auto mb-8">
             <div>
                 <input
                     type="search"
@@ -11,7 +11,7 @@
                     v-model="searchString"
                 />
             </div>
-            <div class="flex ml-4">
+            <div class="flex items-center ml-4">
                 <p class="mr-2">Filter:</p>
                 <select class="mx-1 border-black border-2 rounded" v-model="selectedCategoryFilter">
                     <option
@@ -28,6 +28,12 @@
                     >{{prot}}</option>
                 </select>
             </div>
+            <button
+                class="btn-add-meal ml-4 rounded-full p-2 bg-green-600"
+                @click="toggleAddMealForm()"
+            >
+                <i class="fas fa-plus-circle fa-lg mr-1"></i>Add Meal
+            </button>
         </section>
 
         <div class="meals-container w-11/12 m-auto">
@@ -40,6 +46,46 @@
                 :mealID="meal._id"
                 v-show="filterByCategory(meal.category) && filterByProtein(meal.protein)"
             />
+        </div>
+
+        <div
+            v-if="addMealFormOpen"
+            class="add-meal-form w-11/12 lg:w-1/2 border-solid border-orange-300 border-2 rounded-lg p-4 bg-gray-200"
+        >
+            <button class="btn-close bg-red-600 w-6" @click="toggleAddMealForm()">X</button>
+            <form class="w-7/12 m-auto">
+                <!-- <h2>General Info</h2> -->
+                <div class="flex flex-col my-2">
+                    <label>Meal Name</label>
+                    <input type="text" />
+                </div>
+                <div class="flex flex-col my-2">
+                    <label>Category</label>
+                    <input type="text" />
+                </div>
+                <div class="flex flex-col my-2">
+                    <label>Main Protein Source</label>
+                    <input type="text" />
+                </div>
+                <!-- <h2>Recipe Info</h2> -->
+                <div class="flex flex-col my-2">
+                    <label>Cook Time</label>
+                    <input type="text" />
+                </div>
+                <div class="flex flex-col my-2">
+                    <label>Ingredients</label>
+                    <input type="text" />
+                    <i class="fas fa-plus-circle fa-lg"></i>
+                </div>
+                <div class="flex flex-col my-2">
+                    <label>Instructions</label>
+                    <input type="text" />
+                </div>
+                <div class="flex flex-col my-2">
+                    <label>Notes</label>
+                    <textarea cols="30" rows="10"></textarea>
+                </div>
+            </form>
         </div>
 
         <TheFooter />
@@ -70,7 +116,8 @@ export default {
             proteinFilters: [""],
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
-            searchString: ""
+            searchString: "",
+            addMealFormOpen: false
         };
     },
     methods: {
@@ -80,8 +127,8 @@ export default {
                 this.getFilterOptions();
             });
         },
-        toggleSelected: function(meal) {
-            meal.checked = !meal.checked;
+        toggleAddMealForm: function() {
+            this.addMealFormOpen = !this.addMealFormOpen;
         },
         getFilterOptions: function() {
             this.meals.forEach(meal => {
@@ -135,5 +182,16 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 1rem;
+}
+.add-meal-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+.btn-close {
+    border-radius: 50%;
 }
 </style>

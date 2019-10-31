@@ -4,12 +4,22 @@
         <section class="w-11/12 lg:w-1/2 m-auto">
             <div></div>
             <div>
-                <div class="meal-primary-info mb-8">
-                    <h1>{{name}}</h1>
-                    <p>Category: {{category}}</p>
-                    <p>Protein: {{protein}}</p>
+                <div
+                    class="meal-primary-info mb-8 py-2 px-8 border-solid border-orange-300 border-2 rounded-lg flex justify-between items-center"
+                >
+                    <h1 class="text-4xl">{{name}}</h1>
+                    <div>
+                        <p class="text-sm">
+                            <span class="font-semibold">Category:</span>
+                            {{category}}
+                        </p>
+                        <p class="text-sm">
+                            <span class="font-semibold">Protein:</span>
+                            {{protein}}
+                        </p>
+                    </div>
                 </div>
-                <div class="mt-2 p-2 pl-8 border-solid border-orange-300 border-2 rounded-lg">
+                <div class="mt-2 p-2 px-8 border-solid border-orange-300 border-2 rounded-lg">
                     <h1 class="text-3xl border-black border-solid border-b-2 mb-2">Recipe</h1>
                     <p class="mb-8">
                         <i class="far fa-clock fa-lg"></i>
@@ -77,7 +87,4 @@ export default {
 </script>
 
 <style scoped>
-.meal-primary-info {
-    background-color: rgba(211, 211, 211, 0.3);
-}
 </style>
