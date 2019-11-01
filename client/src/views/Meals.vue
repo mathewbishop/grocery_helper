@@ -74,28 +74,38 @@
                 <div class="my-2 flex">
                     <div class="w-full pr-2">
                         <label class="block">Ingredients</label>
-                        <input
-                            v-for="(ing, index) in meal.ingredients"
-                            :key="index"
-                            v-model="ing[index]"
-                            class="block w-full"
-                            type="text"
-                        />
+                        <div v-for="(ing, index) in meal.ingredients" :key="index" class="flex">
+                            <input v-model="ing[index]" class="block w-full mr-1 my-2" type="text" />
+                            <i
+                                @click="addIngredientInput()"
+                                v-if="index === meal.ingredients.length - 1"
+                                class="fas fa-plus-circle fa-lg self-end pb-3 cursor-pointer text-green-600"
+                            ></i>
+                            <i
+                                @click="removeIngredientInput(index)"
+                                v-if="index !== 0"
+                                class="fas fa-minus-circle fa-lg self-end pb-3 ml-2 cursor-pointer text-red-600"
+                            ></i>
+                        </div>
                     </div>
-                    <i class="fas fa-plus-circle fa-lg self-end pb-1 cursor-pointer"></i>
                 </div>
                 <div class="my-2 flex">
                     <div class="w-full pr-2">
                         <label class="block">Instructions</label>
-                        <input
-                            v-for="(ins, index) in meal.instructions"
-                            :key="index"
-                            v-model="ins[index]"
-                            class="block w-full"
-                            type="text"
-                        />
+                        <div class="flex" v-for="(ins, index) in meal.instructions" :key="index">
+                            <input v-model="ins[index]" class="block w-full mr-1 my-2" type="text" />
+                            <i
+                                @click="addInstructionInput()"
+                                v-if="index === meal.instructions.length - 1"
+                                class="fas fa-plus-circle fa-lg self-end pb-3 ml-2 cursor-pointer text-green-600"
+                            ></i>
+                            <i
+                                @click="removeInstructionInput(index)"
+                                v-if="index !== 0"
+                                class="fas fa-minus-circle fa-lg self-end pb-3 ml-2 cursor-pointer text-red-600"
+                            ></i>
+                        </div>
                     </div>
-                    <i class="fas fa-plus-circle fa-lg self-end pb-1 cursor-pointer"></i>
                 </div>
                 <div class="flex flex-col my-2">
                     <label>Notes</label>
@@ -139,8 +149,8 @@ export default {
                 category: "",
                 protein: "",
                 cookTime: "",
-                ingredients: [],
-                instructions: [],
+                ingredients: [""],
+                instructions: [""],
                 notes: ""
             }
         };
@@ -186,10 +196,16 @@ export default {
             }
         },
         addIngredientInput: function() {
-            this.meal.ingredients.push("Ingredient...");
+            this.meal.ingredients.push("");
         },
         removeIngredientInput: function(index) {
             this.meal.ingredients.splice(index, 1);
+        },
+        addInstructionInput: function() {
+            this.meal.instructions.push("");
+        },
+        removeInstructionInput: function(index) {
+            this.meal.instructions.splice(index, 1);
         }
     },
     computed: {

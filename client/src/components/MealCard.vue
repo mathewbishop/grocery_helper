@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="meal-card border-solid border-orange-300 border-2 p-4 cursor-pointer m-auto"
+            class="meal-card border-solid border-orange-300 border-2 rounded-lg p-4 cursor-pointer m-auto"
             @click="toggleSelected()"
             v-bind:class="{selected: isSelected}"
         >
