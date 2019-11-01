@@ -71,16 +71,19 @@ export default {
     },
     methods: {
         getMealDetail: function() {
-            axios.get(`/api/meals/${this.mealID}`).then(res => {
-                console.log(res);
-                this.name = res.data.name;
-                this.category = res.data.category;
-                this.protein = res.data.protein;
-                this.cookTime = res.data.cookTime;
-                this.ingredients = res.data.ingredients;
-                this.instructions = res.data.instructions;
-                this.notes = res.data.notes;
-            });
+            axios
+                .get(`/api/meals/${this.mealID}`)
+                .then(res => {
+                    console.log(res);
+                    this.name = res.data.name;
+                    this.category = res.data.category;
+                    this.protein = res.data.protein;
+                    this.cookTime = res.data.cookTime;
+                    this.ingredients = res.data.ingredients;
+                    this.instructions = res.data.instructions;
+                    this.notes = res.data.notes;
+                })
+                .catch(err => console.log(err));
         }
     }
 };
