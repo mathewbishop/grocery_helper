@@ -2,7 +2,7 @@
     <div>
         <TheHeader />
 
-        <section class="flex justify-start items-center w-11/12 m-auto mb-8">
+        <section class="flex justify-start items-center flex-wrap w-11/12 m-auto mb-8">
             <div>
                 <input
                     type="search"
@@ -11,21 +11,20 @@
                     v-model="searchString"
                 />
             </div>
-            <div class="flex items-center ml-4">
-                <p class="mr-2">Filter:</p>
+            <div class="flex items-center ml-4 my-8">
                 <select class="mx-1 border-black border-2 rounded" v-model="selectedCategoryFilter">
                     <option
                         :value="cat"
                         v-for="(cat, index) in categoryFilters"
                         :key="index"
-                    >{{cat}}</option>
+                    >{{index === 0 ? "Choose category.." : cat}}</option>
                 </select>
                 <select class="mx-1 border-black border-2 rounded" v-model="selectedProteinFilter">
                     <option
                         :value="prot"
                         v-for="(prot, index) in proteinFilters"
                         :key="index"
-                    >{{prot}}</option>
+                    >{{index === 0 ? "Choose protein.." : prot}}</option>
                 </select>
             </div>
             <button
