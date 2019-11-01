@@ -18,7 +18,11 @@
                     <i class="far fa-edit fa-lg text-green-600" title="Edit"></i>
                 </button>
                 <button class="w-1/3">
-                    <i class="fas fa-trash fa-lg text-red-600" title="Delete"></i>
+                    <i
+                        @click="deleteMeal(mealID)"
+                        class="fas fa-trash fa-lg text-red-600"
+                        title="Delete"
+                    ></i>
                 </button>
             </div>
         </div>
@@ -26,6 +30,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "MealCard",
     components: {},
@@ -43,6 +49,17 @@ export default {
     methods: {
         toggleSelected: function() {
             this.isSelected = !this.isSelected;
+        },
+        deleteMeal: function(id) {
+            if (confirm("Are you sure you want to delete this meal?")) {
+                axios
+                    .delete(`/api/meals/${id}`)
+                    .then(res => {
+                        console.log(res);
+                        this.$router.go();
+                    })
+                    .catch(err => console.log(err));
+            }
         }
     }
 };
