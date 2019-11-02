@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Meals from "../views/Meals.vue";
 import MealDetail from "../views/MealDetail";
 import EditMeal from "../views/EditMeal";
+import GroceryList from "../views/GroceryList";
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
         path: "/edit/:mealID",
         name: "edit-meal",
         component: EditMeal
+    },
+    {
+        path: "/grocery-list",
+        name: "grocery-list",
+        component: GroceryList
     }
 ];
 

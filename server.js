@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const mealsAPI = require("./routes/mealsAPI");
+const groceryListAPI = require("./routes/groceryListAPI");
 //============================================================
 // PORT
 //============================================================
@@ -37,6 +38,7 @@ db.once("open", function() {
 // Routes
 //============================================================
 app.use(mealsAPI);
+app.use(groceryListAPI);
 //============================================================
 // Listener
 //============================================================

@@ -10,6 +10,9 @@ const groceryListItemSchema = new Schema({
         type: String,
         trim: true
     },
+    quantity: {
+        type: Number
+    },
     isCompleted: {
         type: Boolean
     }

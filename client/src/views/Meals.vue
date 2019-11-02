@@ -233,15 +233,6 @@ export default {
                 .then(res => {
                     console.log(res);
                     this.$router.go();
-
-                    this.meal.user = "mattyb";
-                    this.meal.name = "";
-                    this.meal.category = "";
-                    this.meal.protein = "";
-                    this.meal.cookTime = 0;
-                    this.meal.ingredients = [""];
-                    this.meal.instructions = [""];
-                    this.meal.notes = "";
                 })
                 .catch(err => console.log(err));
         }
