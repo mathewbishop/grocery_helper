@@ -1,8 +1,13 @@
 const router = require("express").Router();
 const GroceryListItem = require("../models/GroceryListItem");
 
-router.get("/api/grocery-list/:userID", (req, res) => {
-    GroceryListItem.find({ user: userID })
+// TODO: Add userID as param
+router.get("/api/grocery-list", (req, res) => {
+    let userID = req.params.userID;
+    // GroceryListItem.find({ user: userID })
+    //     .then(data => res.json(data))
+    //     .catch(err => console.log(err));
+    GroceryListItem.find()
         .then(data => res.json(data))
         .catch(err => console.log(err));
 });

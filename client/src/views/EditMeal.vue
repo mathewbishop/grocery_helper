@@ -2,29 +2,29 @@
     <div>
         <TheHeader />
 
-        <div>
-            <form class="w-7/12 m-auto">
-                <!-- <h2>General Info</h2> -->
-                <div class="flex flex-col my-2">
-                    <label>Meal Name</label>
+        <div
+            class="edit-meal-form w-11/12 lg:w-7/12 border-solid border-orange-300 border-2 rounded-lg p-4 cursor-pointer m-auto bg-gray-200"
+        >
+            <form class="w-11/12 lg:w-7/12 m-auto">
+                <div class="flex flex-col my-4">
+                    <label class="font-bold mb-2">Meal Name:</label>
                     <input v-model="meal.name" type="text" />
                 </div>
-                <div class="flex flex-col my-2">
-                    <label>Category</label>
+                <div class="flex flex-col my-4">
+                    <label class="font-bold mb-2">Category:</label>
                     <input v-model="meal.category" type="text" />
                 </div>
-                <div class="flex flex-col my-2">
-                    <label>Main Protein Source</label>
+                <div class="flex flex-col my-4">
+                    <label class="font-bold mb-2">Main Protein Source:</label>
                     <input v-model="meal.protein" type="text" />
                 </div>
-                <!-- <h2>Recipe Info</h2> -->
-                <div class="flex flex-col my-2">
-                    <label>Cook Time (mins)</label>
+                <div class="flex flex-col my-4">
+                    <label class="font-bold mb-2">Cook Time (mins):</label>
                     <input v-model="meal.cookTime" type="number" />
                 </div>
-                <div class="my-2 flex">
+                <div class="my-6 flex">
                     <div class="w-full pr-2">
-                        <label class="block">Ingredients</label>
+                        <label class="block font-bold mb-2">Ingredients:</label>
                         <div v-for="(ing, index) in meal.ingredients" :key="index" class="flex">
                             <input
                                 v-model="meal.ingredients[index]"
@@ -44,9 +44,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="my-2 flex">
+                <div class="my-6 flex">
                     <div class="w-full pr-2">
-                        <label class="block">Instructions</label>
+                        <label class="block font-bold mb-2">Instructions:</label>
                         <div class="flex" v-for="(ins, index) in meal.instructions" :key="index">
                             <input
                                 v-model="meal.instructions[index]"
@@ -66,12 +66,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col my-2">
-                    <label>Notes</label>
+                <div class="flex flex-col my-4">
+                    <label class="font-bold mb-2">Notes:</label>
                     <textarea v-model="meal.notes" cols="30" rows="10"></textarea>
                 </div>
                 <button
-                    @click.prevent="submitMeal()"
+                    @click.prevent="submit()"
                     class="p-2 my-4 w-24 rounded bg-green-500 m-auto block"
                 >Submit</button>
             </form>
@@ -92,23 +92,62 @@ export default {
         TheHeader,
         TheFooter
     },
-    created: function() {},
+    created: function() {
+        this.getMeal();
+    },
     data: function() {
         return {
             mealID: this.$route.params.mealID,
             meal: {
-                user: "",
-                name: "",
-                category: "",
-                protein: "",
-                cookTime: 0,
-                ingredients: [""],
-                instructions: [""],
-                notes: ""
+                user: "mattyb",
+                name: String,
+                category: String,
+                protein: String,
+                cookTime: Number,
+                ingredients: Array,
+                instructions: Array,
+                notes: String
             }
         };
     },
-    methods: {}
+    methods: {
+        getMeal: function() {
+            axios.get(`/api/meals/${this.mealID}`).then(res => {
+                console.log(res);
+                this.meal.name = res.data.name;
+                this.meal.category = res.data.category;
+                this.meal.protein = res.data.protein;
+                this.meal.cookTime = res.data.cookTime;
+                this.meal.ingredients = res.data.ingredients;
+                this.meal.instructions = res.data.instructions;
+                this.meal.notes = res.data.notes;
+            });
+        },
+        submit: function() {
+            let obj = this.meal;
+            axios
+                .put(`/api/meals/${this.mealID}`, {
+                    data: obj
+                })
+                .then(res => {
+                    console.log(res);
+                    alert("Meal edit successful!");
+                })
+                .catch(err => console.log(err));
+        },
+        addIngredientInput: function() {
+            this.meal.ingredients.push("");
+        },
+        removeIngredientInput: function(index) {
+            this.meal.ingredients.splice(index, 1);
+        },
+        addInstructionInput: function() {
+            this.meal.instructions.push("");
+        },
+        removeInstructionInput: function(index) {
+            this.meal.instructions.splice(index, 1);
+        }
+    }
 };
 </script>
 

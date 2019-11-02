@@ -14,9 +14,11 @@
                         <i class="fas fa-eye fa-lg text-blue-600" title="View"></i>
                     </button>
                 </router-link>
-                <button class="w-1/3">
-                    <i class="far fa-edit fa-lg text-green-600" title="Edit"></i>
-                </button>
+                <router-link :to="{ name: 'edit-meal', params: {mealID: mealID}}">
+                    <button class="w-1/3">
+                        <i class="far fa-edit fa-lg text-green-600" title="Edit"></i>
+                    </button>
+                </router-link>
                 <button class="w-1/3">
                     <i
                         @click="deleteMeal(mealID)"
