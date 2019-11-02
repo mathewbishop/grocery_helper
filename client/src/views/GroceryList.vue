@@ -30,22 +30,41 @@
                     <li
                         v-for="listItem in notComplete"
                         :key="listItem._id"
-                        class="py-4 px-1 border-b border-black"
+                        class="py-4 px-1 border-b border-black flex items-center"
                     >
                         <i
                             @click="togglelistItemComplete(listItem)"
                             class="far fa-square fa-lg mr-2 cursor-pointer"
                         ></i>
-                        {{listItem.content}}
-                        <span
-                            class="pl-4"
-                            v-show="listItem.quantity"
-                        >({{listItem.quantity}})</span>
+                        <div
+                            @click="listItemEditMode = true"
+                            v-show="!listItemEditMode"
+                            class="cursor-pointer flex items-center"
+                        >
+                            <span>{{listItem.content}}</span>
+                            <span class="pl-2" v-show="listItem.quantity">({{listItem.quantity}})</span>
+                        </div>
+                        <div v-show="listItemEditMode" class="flex justify-start items-center">
+                            <input
+                                v-model="listItem.content"
+                                type="text"
+                                class="border-black border rounded mx-2"
+                            />
+                            <input
+                                v-model="listItem.quantity"
+                                type="number"
+                                class="border-black border rounded w-12 mx-2"
+                            />
+                            <button
+                                @click="confirmListItemContentEdit(listItem)"
+                                class="rounded-full px-2 py-1 bg-green-600"
+                            >Confirm</button>
+                        </div>
                     </li>
                 </ul>
             </section>
-            <section>
-                <ul class="complete max-w-xl m-auto">
+            <section class="mt-32 mb-32">
+                <ul class="complete max-w-xl mx-auto">
                     <li
                         class="py-4 px-1 border-t border-black flex items-center"
                         v-for="listItem in complete"
@@ -56,7 +75,7 @@
                             class="far fa-check-square fa-lg mr-2 cursor-pointer"
                         ></i>
                         <span class="line-through">{{listItem.content}}</span>
-                        <span class="pl-4" v-show="listItem.quantity">({{listItem.quantity}})</span>
+                        <span class="pl-2" v-show="listItem.quantity">({{listItem.quantity}})</span>
                         <i
                             @click="deleteListItem(listItem)"
                             class="fas fa-trash fa-lg text-red-600 ml-auto pr-4 cursor-pointer"
@@ -93,7 +112,8 @@ export default {
                 content: "",
                 quantity: 0,
                 isCompleted: false
-            }
+            },
+            listItemEditMode: false
         };
     },
     methods: {
@@ -124,7 +144,23 @@ export default {
                 })
                 .catch(err => console.log(err));
         },
-        editlistItemContent: function() {},
+        confirmListItemContentEdit: function(listItem) {
+            axios
+                .put(`/api/grocery-list/${listItem._id}`, {
+                    data: listItem
+                })
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => console.log(err));
+            this.notComplete.forEach(item => {
+                if (item._id === listItem._id) {
+                    item.content = listItem.content;
+                    item.quantity = listItem.quantity;
+                }
+            });
+            this.listItemEditMode = false;
+        },
         togglelistItemComplete: function(listItem) {
             switch (listItem.isCompleted) {
                 case false:
