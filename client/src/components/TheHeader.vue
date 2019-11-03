@@ -1,10 +1,12 @@
 <template>
     <header class="site-header">
         <i class="fas fa-bars fa-2x invisible"></i>
-        <h1 class="text-5xl text-orange-400">
-            Grocery
-            <i class="fas fa-shopping-cart text-2xl text-orange-400"></i> Helper
-        </h1>
+        <router-link to="/">
+            <h1 class="text-5xl text-orange-400">
+                Grocery
+                <i class="fas fa-shopping-cart text-2xl text-orange-400"></i> Helper
+            </h1>
+        </router-link>
         <section>
             <i
                 class="far fa-user-circle fa-2x cursor-pointer mr-12"
