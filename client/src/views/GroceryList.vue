@@ -5,7 +5,7 @@
             <section class="text-center">
                 <input
                     v-model="listItem.content"
-                    class="border-black border rounded w-64"
+                    class="border-black border rounded w-64 pl-1"
                     type="text"
                     placeholder="Add item..."
                 />
@@ -37,14 +37,17 @@
                             class="far fa-square fa-lg mr-2 cursor-pointer"
                         ></i>
                         <div
-                            @click="listItemEditMode = true"
-                            v-show="!listItemEditMode"
+                            @click="listItem.listItemEditMode = true"
+                            v-show="!listItem.listItemEditMode"
                             class="cursor-pointer flex items-center"
                         >
                             <span>{{listItem.content}}</span>
                             <span class="pl-2" v-show="listItem.quantity">({{listItem.quantity}})</span>
                         </div>
-                        <div v-show="listItemEditMode" class="flex justify-start items-center">
+                        <div
+                            v-show="listItem.listItemEditMode"
+                            class="flex justify-start items-center"
+                        >
                             <input
                                 v-model="listItem.content"
                                 type="text"
@@ -57,13 +60,28 @@
                             />
                             <button
                                 @click="confirmListItemContentEdit(listItem)"
-                                class="rounded-full px-2 py-1 bg-green-600"
+                                class="rounded-full px-2 py-1 bg-green-600 cursor-pointer"
                             >Confirm</button>
                         </div>
+                        <i
+                            @click="listItem.listItemEditMode = true"
+                            v-show="!listItem.listItemEditMode"
+                            class="far fa-edit fa-lg text-green-600 ml-auto pr-4 cursor-pointer"
+                            title="Edit"
+                        ></i>
                     </li>
                 </ul>
             </section>
             <section class="mt-32 mb-32">
+                <div class="max-w-xl mx-auto mb-1">
+                    <button
+                        v-show="complete.length > 0"
+                        @click="deleteAllCompleted()"
+                        class="bg-red-600 rounded-lg p-2"
+                    >
+                        <i class="fas fa-trash fa-lg pr-2"></i>Delete All Completed
+                    </button>
+                </div>
                 <ul class="complete max-w-xl mx-auto">
                     <li
                         class="py-4 px-1 border-t border-black flex items-center"
@@ -112,8 +130,7 @@ export default {
                 content: "",
                 quantity: 0,
                 isCompleted: false
-            },
-            listItemEditMode: false
+            }
         };
     },
     methods: {
@@ -123,6 +140,7 @@ export default {
                 .then(res => {
                     console.log(res);
                     res.data.forEach(item => {
+                        item.listItemEditMode = false;
                         if (item.isCompleted) {
                             this.complete.push(item);
                         } else {
@@ -157,9 +175,9 @@ export default {
                 if (item._id === listItem._id) {
                     item.content = listItem.content;
                     item.quantity = listItem.quantity;
+                    item.listItemEditMode = false;
                 }
             });
-            this.listItemEditMode = false;
         },
         togglelistItemComplete: function(listItem) {
             switch (listItem.isCompleted) {
@@ -196,13 +214,30 @@ export default {
             }
         },
         deleteListItem: function(listItem) {
-            axios
-                .delete(`/api/grocery-list/${listItem._id}`)
-                .then(res => {
-                    console.log(res);
-                    this.$router.go();
-                })
-                .catch(err => console.log(err));
+            if (confirm("Are you sure you want to delete this list item?")) {
+                axios
+                    .delete(`/api/grocery-list/${listItem._id}`)
+                    .then(res => {
+                        console.log(res);
+                        this.$router.go();
+                    })
+                    .catch(err => console.log(err));
+            }
+        },
+        deleteAllCompleted: function() {
+            if (
+                confirm(
+                    "Are you sure you want to delete all completed list items?"
+                )
+            ) {
+                axios
+                    .delete("/api/grocery-list", {
+                        data: this.complete
+                    })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err));
+            }
+            this.complete = [];
         }
     }
 };

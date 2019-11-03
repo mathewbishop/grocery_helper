@@ -48,4 +48,20 @@ router.delete("/api/grocery-list/:id", (req, res) => {
         });
 });
 
+router.delete("/api/grocery-list", (req, res) => {
+    console.log("DELETE ALL route hit.");
+    let listItems = req.body;
+    listItems.forEach(item => {
+        GroceryListItem.findByIdAndDelete(item._id)
+            .then(data => {
+                res.end();
+            })
+            .catch(error => {
+                if (error) {
+                    console.log(error);
+                }
+            });
+    });
+});
+
 module.exports = router;
