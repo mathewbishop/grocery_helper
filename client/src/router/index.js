@@ -5,6 +5,7 @@ import Meals from "../views/Meals.vue";
 import MealDetail from "../views/MealDetail";
 import EditMeal from "../views/EditMeal";
 import GroceryList from "../views/GroceryList";
+import MealPlan from "../views/MealPlan";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes = [
         path: "/grocery-list",
         name: "grocery-list",
         component: GroceryList
+    },
+    {
+        path: "/meal-plan",
+        name: "meal-plan",
+        component: MealPlan
     }
 ];
 
