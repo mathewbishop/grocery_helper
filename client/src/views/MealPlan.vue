@@ -1,13 +1,14 @@
 <template>
     <div>
         <TheHeader />
-        <section class="flex flex-row justify-start items-center flex-wrap w-11/12 m-auto mb-8">
+        <section class="w-11/12 m-auto mb-8">
+            <h1 class="text-2xl">Current Meal Plan</h1>
             <ol class="meal-plan-list list-decimal">
-                <li>{{ mealPlan.one ? mealPlan.one.name : ""}}</li>
-                <li>{{ mealPlan.two ? mealPlan.two.name : ""}}</li>
-                <li>{{ mealPlan.three ? mealPlan.three.name : ""}}</li>
-                <li>{{ mealPlan.four ? mealPlan.four.name : ""}}</li>
-                <li>{{ mealPlan.five ? mealPlan.five.name : ""}}</li>
+                <li>{{ mealPlan[0] ? mealPlan[0].name : ""}}</li>
+                <li>{{ mealPlan[1] ? mealPlan[1].name : ""}}</li>
+                <li>{{ mealPlan[2] ? mealPlan[2].name : ""}}</li>
+                <li>{{ mealPlan[3] ? mealPlan[3].name : ""}}</li>
+                <li>{{ mealPlan[4] ? mealPlan[4].name : ""}}</li>
             </ol>
         </section>
 
@@ -39,18 +40,22 @@
             <button class="ml-4 rounded-full p-2 bg-orange-600">
                 <i class="fas fa-cart-plus fa-lg mr-1"></i>Start New Meal Plan
             </button>
+            <button class="ml-4 rounded-full p-2 bg-green-600">
+                <i class="fas fa-plus-circle fa-lg fa-lg mr-1"></i>Add Selected to Plan
+            </button>
         </section>
 
         <section class="meals-container w-11/12 m-auto">
-            <div
-                class="meal-card border-solid border-orange-300 border-2 rounded-lg p-4 cursor-pointer m-auto"
-                v-for="(meal, index) in meals"
-                :key="index"
-            >
-                <h1 class="font-semibold pb-2">{{meal.name}}</h1>
-                <p class="text-xs">Category: {{meal.category}}</p>
-                <p class="text-xs">Protein: {{meal.protein}}</p>
-            </div>
+            <MealCard
+                v-for="meal in filteredMeals"
+                v-bind:key="meal._id"
+                :name="meal.name"
+                :category="meal.category"
+                :protein="meal.protein"
+                :mealID="meal._id"
+                v-on:mealSelected="handleMealSelected"
+                v-show="filterByCategory(meal.category) && filterByProtein(meal.protein)"
+            />
         </section>
         <TheFooter />
     </div>
@@ -61,12 +66,14 @@
 import axios from "axios";
 import TheHeader from "../components/TheHeader";
 import TheFooter from "../components/TheFooter";
+import MealCard from "../components/MealCard";
 
 export default {
     name: "MealPlan",
     components: {
         TheHeader,
-        TheFooter
+        TheFooter,
+        MealCard
     },
     created: function() {
         this.getMeals();
@@ -79,13 +86,7 @@ export default {
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
             searchString: "",
-            mealPlan: {
-                one: {},
-                two: {},
-                three: {},
-                four: {},
-                five: {}
-            }
+            mealPlan: []
         };
     },
     methods: {
@@ -127,6 +128,12 @@ export default {
             } else {
                 return false;
             }
+        },
+        handleMealSelected: function(name, mealID, isSelected) {
+            if (isSelected) this.mealPlan.push({ name: name, _id: mealID });
+            else this.mealPlan = this.mealPlan.filter(x => x._id !== mealID);
+
+            console.log(this.mealPlan);
         }
     },
     computed: {
@@ -158,7 +165,7 @@ export default {
 }
 .meal-plan-list {
     max-width: 400px;
-    margin: 0 auto;
+    margin-left: 50px;
 }
 .meal-plan-list li {
     margin: 10px 0 10px 0;
