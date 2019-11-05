@@ -2,8 +2,12 @@
     <div>
         <TheHeader />
         <section class="flex flex-row justify-start items-center flex-wrap w-11/12 m-auto mb-8">
-            <ol class="list-decimal">
-                <!-- <li v-for="(meal, index) in mealPlan" :key="index"></li> -->
+            <ol class="meal-plan-list list-decimal">
+                <li>{{ mealPlan.one ? mealPlan.one.name : ""}}</li>
+                <li>{{ mealPlan.two ? mealPlan.two.name : ""}}</li>
+                <li>{{ mealPlan.three ? mealPlan.three.name : ""}}</li>
+                <li>{{ mealPlan.four ? mealPlan.four.name : ""}}</li>
+                <li>{{ mealPlan.five ? mealPlan.five.name : ""}}</li>
             </ol>
         </section>
 
@@ -74,7 +78,14 @@ export default {
             proteinFilters: [""],
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
-            searchString: ""
+            searchString: "",
+            mealPlan: {
+                one: {},
+                two: {},
+                three: {},
+                four: {},
+                five: {}
+            }
         };
     },
     methods: {
@@ -144,5 +155,13 @@ export default {
 .meal-card {
     background-color: rgba(211, 211, 211, 0.3);
     width: 251px;
+}
+.meal-plan-list {
+    max-width: 400px;
+    margin: 0 auto;
+}
+.meal-plan-list li {
+    margin: 10px 0 10px 0;
+    font-size: 18px;
 }
 </style>
