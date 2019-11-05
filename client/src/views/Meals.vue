@@ -53,7 +53,6 @@
         >
             <button class="btn-close bg-red-600 w-6" @click="toggleAddMealForm()">X</button>
             <form class="w-7/12 m-auto">
-                <!-- <h2>General Info</h2> -->
                 <div class="flex flex-col my-2">
                     <label>Meal Name</label>
                     <input v-model="meal.name" type="text" />
@@ -66,7 +65,6 @@
                     <label>Main Protein Source</label>
                     <input v-model="meal.protein" type="text" />
                 </div>
-                <!-- <h2>Recipe Info</h2> -->
                 <div class="flex flex-col my-2">
                     <label>Cook Time (mins)</label>
                     <input v-model="meal.cookTime" type="number" />
