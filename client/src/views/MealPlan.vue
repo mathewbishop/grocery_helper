@@ -137,12 +137,13 @@ export default {
             }
         },
         handleMealSelected: function(name, mealID, isSelected) {
-            if (isSelected)
+            if (isSelected) {
                 this.selectedMeals.push({ name: name, _id: mealID });
-            else
+            } else {
                 this.mealPlan = this.selectedMeals.filter(
                     x => x._id !== mealID
                 );
+            }
 
             console.log(this.mealPlan);
         },
