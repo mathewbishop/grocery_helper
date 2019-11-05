@@ -4,11 +4,11 @@
         <section class="w-11/12 m-auto mb-8">
             <h1 class="text-2xl">Current Meal Plan</h1>
             <ol class="meal-plan-list list-decimal">
-                <li>{{ mealPlan[0] ? mealPlan[0].name : ""}}</li>
-                <li>{{ mealPlan[1] ? mealPlan[1].name : ""}}</li>
-                <li>{{ mealPlan[2] ? mealPlan[2].name : ""}}</li>
-                <li>{{ mealPlan[3] ? mealPlan[3].name : ""}}</li>
-                <li>{{ mealPlan[4] ? mealPlan[4].name : ""}}</li>
+                <li>{{ mealPlan.one ? mealPlan.one.name : ""}}</li>
+                <li>{{ mealPlan.two ? mealPlan.two.name : ""}}</li>
+                <li>{{ mealPlan.three ? mealPlan.three.name : ""}}</li>
+                <li>{{ mealPlan.four ? mealPlan.four.name : ""}}</li>
+                <li>{{ mealPlan.five ? mealPlan.five.name : ""}}</li>
             </ol>
         </section>
 
@@ -86,7 +86,14 @@ export default {
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
             searchString: "",
-            mealPlan: []
+            mealPlan: {
+                one: {},
+                two: {},
+                three: {},
+                four: {},
+                five: {}
+            },
+            selectedMeals: []
         };
     },
     methods: {
@@ -130,11 +137,16 @@ export default {
             }
         },
         handleMealSelected: function(name, mealID, isSelected) {
-            if (isSelected) this.mealPlan.push({ name: name, _id: mealID });
-            else this.mealPlan = this.mealPlan.filter(x => x._id !== mealID);
+            if (isSelected)
+                this.selectedMeals.push({ name: name, _id: mealID });
+            else
+                this.mealPlan = this.selectedMeals.filter(
+                    x => x._id !== mealID
+                );
 
             console.log(this.mealPlan);
-        }
+        },
+        addSelectedToPlan: function() {}
     },
     computed: {
         filteredMeals: function() {
