@@ -26,6 +26,10 @@ const mealSchema = new Schema({
     notes: {
         type: String,
         trim: true
+    },
+    onMealPlan: {
+        type: Boolean,
+        default: false
     }
 });
 

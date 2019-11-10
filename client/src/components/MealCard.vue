@@ -51,7 +51,7 @@ export default {
     methods: {
         toggleSelected: function() {
             this.isSelected = !this.isSelected;
-            this.$emit("mealSelected", this.name, this.mealID, this.isSelected);
+            this.$emit("mealSelected", this.mealID, this.isSelected);
         },
         deleteMeal: function(id) {
             if (confirm("Are you sure you want to delete this meal?")) {

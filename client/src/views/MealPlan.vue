@@ -4,11 +4,10 @@
         <section class="w-11/12 m-auto mb-8">
             <h1 class="text-2xl">Current Meal Plan</h1>
             <ol class="meal-plan-list list-decimal">
-                <li>{{ mealPlan.one ? mealPlan.one.name : ""}}</li>
-                <li>{{ mealPlan.two ? mealPlan.two.name : ""}}</li>
-                <li>{{ mealPlan.three ? mealPlan.three.name : ""}}</li>
-                <li>{{ mealPlan.four ? mealPlan.four.name : ""}}</li>
-                <li>{{ mealPlan.five ? mealPlan.five.name : ""}}</li>
+                <li v-for="meal in mealPlan" :key="meal._id">
+                    {{meal.name}}
+                    <i class="fas fa-trash fa-lg text-red-600"></i>
+                </li>
             </ol>
         </section>
 
@@ -37,10 +36,10 @@
                     >{{index === 0 ? "Choose protein.." : prot}}</option>
                 </select>
             </div>
-            <button class="ml-4 rounded-full p-2 bg-orange-600">
+            <button @click="newMealPlan()" class="ml-4 rounded-full p-2 bg-orange-600">
                 <i class="fas fa-cart-plus fa-lg mr-1"></i>Start New Meal Plan
             </button>
-            <button class="ml-4 rounded-full p-2 bg-green-600">
+            <button @click="addSelectedToPlan()" class="ml-4 rounded-full p-2 bg-green-600">
                 <i class="fas fa-plus-circle fa-lg fa-lg mr-1"></i>Add Selected to Plan
             </button>
         </section>
@@ -77,6 +76,7 @@ export default {
     },
     created: function() {
         this.getMeals();
+        this.getMealPlan();
     },
     data: function() {
         return {
@@ -86,13 +86,7 @@ export default {
             selectedCategoryFilter: "",
             selectedProteinFilter: "",
             searchString: "",
-            mealPlan: {
-                one: {},
-                two: {},
-                three: {},
-                four: {},
-                five: {}
-            },
+            mealPlan: [],
             selectedMeals: []
         };
     },
@@ -106,6 +100,11 @@ export default {
                 })
                 .catch(err => console.log(err));
         },
+        getMealPlan: function() {
+            axios.get("/api/meal-plan").then(res => {
+                this.mealPlan = res.data.map(x => x);
+            });
+        },
         getFilterOptions: function() {
             this.meals.forEach(meal => {
                 if (!this.categoryFilters.includes(meal.category)) {
@@ -117,37 +116,38 @@ export default {
             });
         },
         filterByCategory: function(category) {
-            if (
-                this.selectedCategoryFilter === category ||
+            return this.selectedCategoryFilter === category ||
                 !this.selectedCategoryFilter
-            ) {
-                return true;
-            } else {
-                return false;
-            }
+                ? true
+                : false;
         },
         filterByProtein: function(protein) {
-            if (
-                this.selectedProteinFilter === protein ||
+            return this.selectedProteinFilter === protein ||
                 !this.selectedProteinFilter
-            ) {
-                return true;
-            } else {
-                return false;
-            }
+                ? true
+                : false;
         },
-        handleMealSelected: function(name, mealID, isSelected) {
+        handleMealSelected: function(mealID, isSelected) {
             if (isSelected) {
-                this.selectedMeals.push({ name: name, _id: mealID });
+                this.selectedMeals.push(mealID);
             } else {
-                this.mealPlan = this.selectedMeals.filter(
-                    x => x._id !== mealID
+                this.selectedMeals = this.selectedMeals.filter(
+                    x => x !== mealID
                 );
             }
-
-            console.log(this.mealPlan);
+            console.log(this.selectedMeals);
         },
-        addSelectedToPlan: function() {}
+        addSelectedToPlan: function() {
+            axios
+                .put("/api/meal-plan", {
+                    data: this.selectedMeals
+                })
+                .then(res => {
+                    console.log(res);
+                    this.getMealPlan();
+                })
+                .catch(err => console.log(err));
+        }
     },
     computed: {
         filteredMeals: function() {
