@@ -4,9 +4,12 @@
         <section class="w-11/12 m-auto mb-8">
             <h1 class="text-2xl">Current Meal Plan</h1>
             <ol class="meal-plan-list list-decimal">
-                <li v-for="meal in mealPlan" :key="meal._id">
-                    {{meal.name}}
-                    <i class="fas fa-trash fa-lg text-red-600"></i>
+                <li v-for="meal in mealPlan" :key="meal._id" class="flex justify-start">
+                    <span>{{meal.name}}</span>
+                    <i
+                        @click="removeFromPlan(meal._id)"
+                        class="fas fa-minus-circle fa-lg text-red-600 cursor-pointer ml-auto"
+                    ></i>
                 </li>
             </ol>
         </section>
@@ -147,6 +150,22 @@ export default {
                     this.getMealPlan();
                 })
                 .catch(err => console.log(err));
+        },
+        removeFromPlan: function(id) {
+            if (
+                confirm(
+                    "Are you sure you want to remove this meal from the current meal plan?"
+                )
+            ) {
+                axios
+                    .put(`/api/meal-plan/remove/${id}`)
+                    .then(res => {
+                        console.log(res);
+                        // this.$router.go();
+                        this.getMealPlan();
+                    })
+                    .catch(err => console.log(err));
+            }
         }
     },
     computed: {

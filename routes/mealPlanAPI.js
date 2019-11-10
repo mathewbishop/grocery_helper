@@ -18,6 +18,13 @@ router.put("/api/meal-plan", (req, res) => {
     res.end();
 });
 
+router.put("/api/meal-plan/remove/:id", (req, res) => {
+    let id = req.params.id;
+    Meal.findByIdAndUpdate(id, { onMealPlan: false }, { new: true, useFindAndModify: false })
+        .then(data => res.json(data))
+        .catch(err => console.log(err));
+});
+
 router.post("/api/new/meal-plan", (req, res) => {});
 
 module.exports = router;
