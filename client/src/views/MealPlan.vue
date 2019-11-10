@@ -2,10 +2,13 @@
     <div>
         <TheHeader />
         <section class="w-11/12 m-auto mb-8">
-            <h1 class="text-2xl">Current Meal Plan</h1>
+            <h1 v-if="mealPlan.length > 0" class="text-2xl">Current Meal Plan</h1>
+            <p class="text-xl" v-if="mealPlan.length === 0">No current meal plan. Add some meals!</p>
             <ol class="meal-plan-list list-decimal">
                 <li v-for="meal in mealPlan" :key="meal._id" class="flex justify-start">
-                    <span>{{meal.name}}</span>
+                    <router-link :to="{ name: 'meal-detail', params: {mealID: meal._id }}">
+                        <span class="text-blue-600 underline">{{meal.name}}</span>
+                    </router-link>
                     <i
                         @click="removeFromPlan(meal._id)"
                         class="fas fa-minus-circle fa-lg text-red-600 cursor-pointer ml-auto"
@@ -147,7 +150,7 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
-                    this.getMealPlan();
+                    this.$router.go();
                 })
                 .catch(err => console.log(err));
         },
@@ -161,7 +164,24 @@ export default {
                     .put(`/api/meal-plan/remove/${id}`)
                     .then(res => {
                         console.log(res);
-                        // this.$router.go();
+                        this.$router.go();
+                    })
+                    .catch(err => console.log(err));
+            }
+        },
+        newMealPlan: function() {
+            if (
+                confirm(
+                    "Are you sure you want to start a new meal plan? This will remove all meals from the current plan."
+                )
+            ) {
+                let idList = this.mealPlan.map(x => x._id);
+                axios
+                    .put("/api/meal-plan/clear", {
+                        data: idList
+                    })
+                    .then(res => {
+                        console.log(res);
                         this.getMealPlan();
                     })
                     .catch(err => console.log(err));

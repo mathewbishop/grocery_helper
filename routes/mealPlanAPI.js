@@ -25,6 +25,14 @@ router.put("/api/meal-plan/remove/:id", (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.post("/api/new/meal-plan", (req, res) => {});
+router.put("/api/meal-plan/clear", (req, res) => {
+    let mealIDs = req.body.data;
+    mealIDs.forEach(id => {
+        Meal.findByIdAndUpdate(id, { onMealPlan: false }, { new: true, useFindAndModify: false })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    });
+    res.end();
+});
 
 module.exports = router;
