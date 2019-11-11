@@ -48,6 +48,10 @@
             <button @click="addSelectedToPlan()" class="ml-4 rounded-full p-2 bg-green-600">
                 <i class="fas fa-plus-circle fa-lg fa-lg mr-1"></i>Add Selected to Plan
             </button>
+            <button
+                @click="createGroceryList()"
+                class="ml-4 rounded-full p-2 bg-blue-600"
+            >Create Grocery List</button>
         </section>
 
         <section class="meals-container w-11/12 m-auto">
@@ -186,6 +190,18 @@ export default {
                     })
                     .catch(err => console.log(err));
             }
+        },
+        createGroceryList: function() {
+            let ingArry = this.mealPlan.map(x => x.ingredients).flat();
+            ingArry.forEach(ing => {
+                ing = {
+                    user: "mattyb",
+                    content: ing,
+                    quantity: 0,
+                    isCompleted: false
+                };
+            });
+            console.log(ingArry);
         }
     },
     computed: {

@@ -13,7 +13,6 @@ router.get("/api/grocery-list", (req, res) => {
 });
 
 router.post("/api/grocery-list", (req, res) => {
-    console.log("POST route hit.");
     let listItem = new GroceryListItem(req.body.data);
     listItem
         .save()
