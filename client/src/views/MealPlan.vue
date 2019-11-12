@@ -192,16 +192,23 @@ export default {
             }
         },
         createGroceryList: function() {
-            let ingArry = this.mealPlan.map(x => x.ingredients).flat();
-            ingArry.forEach(ing => {
-                ing = {
-                    user: "mattyb",
-                    content: ing,
-                    quantity: 0,
-                    isCompleted: false
-                };
-            });
-            console.log(ingArry);
+            let ingListItems = this.mealPlan
+                .map(x => x.ingredients)
+                .flat()
+                .map(ing => {
+                    return {
+                        user: "mattyb",
+                        content: ing,
+                        quantity: 0,
+                        isCompleted: false
+                    };
+                });
+            axios
+                .post("/api/grocery-list/multi", {
+                    data: ingListItems
+                })
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
         }
     },
     computed: {

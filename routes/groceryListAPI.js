@@ -21,6 +21,18 @@ router.post("/api/grocery-list", (req, res) => {
     res.end();
 });
 
+router.post("/api/grocery-list/multi", (req, res) => {
+    let list = req.body.data;
+    list.forEach(item => {
+        let grocListItem = new GroceryListItem(item);
+        grocListItem
+            .save()
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    });
+    res.end();
+});
+
 router.put("/api/grocery-list/:id", (req, res) => {
     console.log("PUT route hit.");
     let itemID = req.params.id;

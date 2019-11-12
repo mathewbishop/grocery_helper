@@ -29,3 +29,5 @@ A meal/recipe management system and grocery planning aid inspired by my wife and
 **Grocery List** - Keep track of what you need to buy at the grocery store this week, including the quantity of each item.
 
 **Meal Plan** - Add and remove meals from you Meal Plan. Keep track of what you're having for dinner for the week, and when it's time to make dinner, click on the meal in your plan to view the recipe.
+
+&nbsp;&nbsp; \*Click a button to automatically populate the grocery list with the ingredients for each meal on the current meal plan.
