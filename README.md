@@ -1,6 +1,6 @@
 # Grocery Helper
 
-A meal/recipe management system and grocery planning aid inspired by my wife and I's needs for such a system. This is a successor, another more fully realized iteration of this concept that I have built before.
+A proof of concept for a meal/recipe management system and grocery planning aid. This is another iteration on this concept. I have built previous iterations based on a similar concept. 
 
 ## Pictures
 
